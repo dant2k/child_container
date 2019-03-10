@@ -188,6 +188,10 @@ int main(int argc, char** argv)
     if (child_thread_handle == 0)
     {
         fprintf(stderr, "Failed to create remote thread. GetLastError() = %d\n", GetLastError());
+
+        // Well, we can't do anything clever, so just nuke it. MOST LIKELY
+        // we couldn't create the remote thread because the process is already dead...
+        TerminateProcess(process_info.hProcess, 0);
         return 2;
     }
 
